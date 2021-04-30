@@ -26,17 +26,24 @@ def mea(a, b, n):
     return [finalNum % n, duration, steps]     # [finalNum % n, duration]
 
 def rec_mea(a, b, n):
-    if b < 99999999:
-        finalNum = 1
-        for exp in getBinExpList(b):
-            finalNum *= (a ** exp) % n
-            finalNum = finalNum % n
-        print(finalNum % n)
-        return finalNum % n
-    else:
-        first_half = int(b/2)
-        second_half = b - first_half
-        return (rec_mea(a, first_half, n) % n) * (rec_mea(a, second_half, n) % n)
+    def innards(k):
+        if k >= len(bin(b)[2:]):
+            return 1
+        else:
+            # print(int(bin(b)[::-1][k]))
+            if int(bin(b)[::-1][k]) == 1:
+                fin = a
+                for i in range(k):
+                    fin = (fin ** 2) % n
+                print(f"K = {k}; {int(bin(b)[::-1][k])} * {fin} * innards({k + 1})")
+                return fin * innards(k + 1)
+            else:
+                print(f"K = {k}; {int(bin(b)[::-1][k])} * {((a ** k) % n)} * innards({k + 1})")
+                return innards(k + 1) % n
+    return innards(0) % n
+
+
+
 
 def list_mea(a, b, n):
     finalNum = 1
@@ -46,10 +53,11 @@ def list_mea(a, b, n):
     return finalNum
 
 
-print(getBinExpList(13530185234470674604))
-print(list_mea(9, 105, 137))
+# print(getBinExpList(13530185234470674604))
+print(getBinExpList(105))
+# print(rec_mea(9, 105, 137))
 # a) a = 2, b = 135301852344706746049, n = 947112966412947222343
-# print(rec_mea(2, 13530185234470674604, 947112966412947222343))
+print(rec_mea(2, 13530185234470674604, 947112966412947222343))
 
 # b) a = 13, b = 354224848179261915075, n = 573147844013817084101
 # print(mea(13, 354224848179261915075, 573147844013817084101))
