@@ -1,3 +1,5 @@
+import time
+
 def gcd(big, small, steps):
     # swap inputs if first input less than second
     if small > big:
@@ -70,10 +72,10 @@ def rec_mea(a, b, n):
                 fin = a
                 for i in range(k):
                     fin = (fin ** 2) % n
-                print(f"K = {k}; {int(bin(b)[::-1][k])} * {fin} * innards({k + 1})")
+                # print(f"K = {k}; {int(bin(b)[::-1][k])} * {fin} * innards({k + 1})")
                 return fin * innards(k + 1)
             else:
-                print(f"K = {k}; {int(bin(b)[::-1][k])} * {((a ** k) % n)} * innards({k + 1})")
+                # print(f"K = {k}; {int(bin(b)[::-1][k])} * {((a ** k) % n)} * innards({k + 1})")
                 return innards(k + 1) % n
     return innards(0) % n
 
